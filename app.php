@@ -199,19 +199,38 @@
 <hr />
 
 <?php
+
+
+
+
 			$dataExists = false;
-				if ($_SERVER["REQUEST_METHOD"] == "POST")
-				{
-			$name = $_POST["name"];
-			$Login_id = $_POST["Login_id"];
-			$date = $_POST["date"];
-			$genre = $_POST["genre"];
-			$description = $_POST["description"];
-				if($name && $Login_id && $date && $genre)
-					{
-			$dataExists = true;
+			if ($_SERVER["REQUEST_METHOD"] == "POST"){
+				$Login_id = $_POST["Login_id"];
+				$name = $_POST["name"];
+				$date = $_POST["date"];
+				$genre = $_POST["genre"];
+				$description = $_POST["description"];
+					
+				if($name && $Login_id && $date && $genre){
+					$dataExists = true;
+					$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_shikter");
+					
+					$stmt = $mysql->prepare("INSERT INTO Reservation(Login, Name, reserv_date, label_genre, description) VALUES(?,?,?,?,?)");
+					
+					//echo error
+					echo $mysql->error;
+					
+					// for each question mark its type with one letter
+					$stmt->bind_param("sssss", $_POST["Login_id"], $_POST["name"], $_POST["date"], $_POST["genre"], $_POST["description"]);
+					
+					//save
+					if($stmt->execute()){
+						echo "saved sucessfully";
+					}else{
+						echo $stmt->error;
 					}
 				}
+			}
 ?>
 
 <html>
