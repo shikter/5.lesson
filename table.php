@@ -20,14 +20,42 @@
 	//query
 	$stmt->execute();
 	
+	$table_html = "";
+	
+	//add smth to string .=
+	$table_html .="<table>";
+		$table_html .="<tr>";//start new row
+		
+			$table_html .="<th>ID</th>";
+			$table_html .="<th>Recipient</th>";
+			$table_html .="<th>Message</th>";
+			$table_html .="<th>Sender</th>";
+			$table_html .="<th>Created</th>";
+		
+		$table_html .="</tr>"; //end row
+	
 	// GET RESULT
 	// we have multiple rows
 	while($stmt->fetch()){
 			
+			
 		// DO SOMETHING FOR EACH ROW
-		echo $id." ".$message."<br>";
-	
+		//echo $id." ".$message."<br>";
+		$table_html .="<tr>";//start new row
+		
+			$table_html .="<td>".$id."</td>";	//add colums
+			$table_html .="<td>".$recipient."</td>";
+			$table_html .="<td>".$message."</td>";
+			$table_html .="<td>".$sender."</td>";
+			$table_html .="<td>".$created."</td>";
+			
+		$table_html .="</tr>"; //end row
 	}
+	
+	$table_html .="</table>";
+	echo $table_html;
+	
+
 	
 ?>
 
